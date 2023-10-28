@@ -1,0 +1,90 @@
+syntax = "proto3";
+package crypto;
+
+message CryptoRequest {
+  bool trade = 1;
+  bool order_book = 2;
+  bool quote = 3;
+  bool bar = 4;
+  bool daily_bar = 5;
+  bool updated_bar = 6;
+}
+
+message CryptoData {
+  oneof data {
+    crypto.Trade trade = 1;
+    crypto.OrderBook order_book = 2;
+    crypto.Quote quote = 3;
+    crypto.Bar bar = 4;
+    crypto.DailyBar daily_bar = 5;
+    crypto.UpdatedBar updated_bar = 6;
+  }
+}
+
+message Trade {
+  string symbol = 1;
+  double price = 2;
+  double size = 3;
+  uint64 timestamp = 4;
+  uint64 id =5;
+  string taker_side = 6;
+}
+
+message Book {
+    double price = 1;
+    double size = 2;
+}
+
+message OrderBook {
+  string symbol =1;
+  uint64 timestamp =2;
+  repeated Book bid = 3;
+  repeated Book ask = 4;
+  bool reset = 5;
+}
+
+message Quote {
+  string symbol = 1;
+  double bid_price = 2;
+  double bid_size = 3;
+  double ask_price = 4;
+  double ask_size = 5;
+  uint64 timestamp = 6;
+}
+
+message Bar {
+  string symbol = 1;
+  double open = 2;
+  double high = 3;
+  double low = 4;
+  double close = 5;
+  double volume = 6;
+  uint64 timestamp = 7;
+  uint64 num_trades = 8;
+  double volume_weigth = 9;
+}
+
+message DailyBar {
+  string symbol = 1;
+  double open = 2;
+  double high = 3;
+  double low = 4;
+  double close = 5;
+  double volume = 6;
+  uint64 timestamp = 7;
+  uint64 num_trades = 8;
+  double volume_weigth = 9;
+}
+
+message UpdatedBar {
+  string symbol = 1;
+  double open = 2;
+  double high = 3;
+  double low = 4;
+  double close = 5;
+  double volume = 6;
+  uint64 timestamp = 7;
+  uint64 num_trades = 8;
+  double volume_weigth = 9;
+}
+

@@ -1,0 +1,19 @@
+syntax = "proto3";
+package news;
+
+message NewsRequest {
+  bool news = 1;
+}
+
+message News {
+  uint64 id = 1;
+  string headline = 2;
+  string summary = 3;
+  string author = 4;
+  uint64 created = 5;
+  uint64 updated = 6;
+  string url = 7;
+  string content = 8;
+  repeated string symbols = 9;
+  string source =10;
+}

@@ -1,0 +1,127 @@
+syntax = "proto3";
+package stock;
+
+message StockRequest {
+  bool trade = 1;
+  bool trade_correction = 2;
+  bool trade_cancel = 3;
+  bool quote = 4;
+  bool bar = 5;
+  bool daily_bar = 6;
+  bool updated_bar = 7;
+  bool luld = 8;
+  bool status = 9;
+}
+
+message StockData {
+  oneof data {
+    stock.Trade trade = 1;
+    stock.TradeCorrection trade_correction = 2;
+    stock.TradeCancel trade_cancel = 3;
+    stock.Quote quote = 4;
+    stock.Bar bar = 5;
+    stock.DailyBar daily_bar = 6;
+    stock.UpdatedBar updated_bar = 7;
+    stock.Luld luld = 8;
+    stock.Status status = 9;
+  }
+}
+
+message Trade {
+  string symbol = 1;
+  uint64 id =2;
+  double price = 3;
+  string exchange_code = 4;
+  uint64 size = 5;
+  uint64 timestamp = 6;
+  repeated string condition = 7;
+  string tape = 8;
+}
+
+message TradeCorrection {
+  string symbol = 1;
+  string exchange_code = 2;
+  uint64 original_id = 3;
+  double original_price = 4;
+  uint64 original_size = 5;
+  repeated string original_conditions = 6;
+  uint64 corrected_id = 7;
+  double corrected_price = 8;
+  uint64 corrected_size = 9;
+  repeated string corrected_conditions = 10;
+  uint64 timestamp = 11;
+  string tape = 12;
+}
+
+message TradeCancel {
+  string symbol = 1;
+  uint64 id = 2;
+  string exchange_code = 3;
+  double price = 4;
+  uint64 size = 5;
+  string action = 6;
+  uint64 timestamp = 7;
+  string tape = 8;
+}
+
+message Quote {
+  string symbol = 1;
+  string ask_exchange_code = 2;
+  double ask_price = 3;
+  uint64 ask_size = 4;
+  string bid_exchange_code = 5;
+  double bid_price = 6;
+  uint64 bid_size = 7;
+  repeated string condition = 8;
+  uint64 timestamp = 9;
+  string tape = 10;
+}
+
+message Bar {
+  string symbol = 1;
+  double open = 2;
+  double high = 3;
+  double low = 4;
+  double close = 5;
+  uint64 volume = 6;
+  uint64 timestamp = 7;
+}
+
+message DailyBar {
+  string symbol = 1;
+  double open = 2;
+  double high = 3;
+  double low = 4;
+  double close = 5;
+  uint64 volume = 6;
+  uint64 timestamp = 7;
+}
+
+message UpdatedBar {
+  string symbol = 1;
+  double open = 2;
+  double high = 3;
+  double low = 4;
+  double close = 5;
+  uint64 volume = 6;
+  uint64 timestamp = 7;
+}
+
+message Luld {
+  string symbol = 1;
+  double limit_up = 2;
+  double limit_down = 3;
+  string indicator = 4;
+  uint64 timestamp = 5;
+  string tape = 6;
+}
+
+message Status {
+  string symbol = 1;
+  string status_code = 2;
+  string status_message = 3;
+  string reason_code = 4;
+  string reason_message = 5;
+  uint64 timestamp = 6;
+  string tape = 7;
+}
