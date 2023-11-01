@@ -96,6 +96,8 @@ where
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    println!("starting clickhouse writer");
+
     let sherpa_endpoint = env::var("SHERPA_ENDPOINT").expect("SHERPA_ENDPOINT must be set");
     let clickhouse_endpoint =
         env::var("CLICKHOUSE_ENDPOINT").expect("CLICKHOUSE_ENDPOINT must be set");
@@ -110,6 +112,7 @@ async fn main() -> Result<()> {
         .parse::<u64>()
         .expect("could not parse PERIOD into u64");
 
+    println!("connecting to gRPC");
     // gRPC client
     let mut grpc_client =
         sherpa::stock_streamer_client::StockStreamerClient::connect(sherpa_endpoint).await?;
@@ -130,12 +133,14 @@ async fn main() -> Result<()> {
 
     // clickhouse
 
+    println!("connecting to clickhouse");
     let clickhouse_client = Client::default()
         .with_url(clickhouse_endpoint)
         .with_user(clickhouse_username)
         .with_password(clickhouse_password)
         .with_database(clickhouse_database);
 
+    println!("creating tables");
     let sql_folder_path = Path::new("sql");
     for entry in fs::read_dir(sql_folder_path)? {
         let entry = entry?;
