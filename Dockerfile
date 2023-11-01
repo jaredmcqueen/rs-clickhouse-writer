@@ -12,5 +12,6 @@ RUN cargo build --release
 FROM debian:bookworm-slim as runner
 RUN apt-get update && apt-get install -y protobuf-compiler libprotobuf-dev && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/src/app/target/release/rs-clickhouse-writer /
+COPY --from=builder /usr/src/app/sql /
 
 CMD ["/rs-clickhouse-writer"]
